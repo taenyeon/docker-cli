@@ -3,9 +3,6 @@ spring:
     active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username:
-    password:
-    url:
     hikari:
       connection-timeout: 5000
       validation-timeout: 1000

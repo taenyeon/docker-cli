@@ -1,0 +1,9 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL:url}/docker-cli?useSSL=false&characterEncoding=UTF-8&serverTimeZone=Asia/Seoul
+    username: ${DB_USERNAME:username}
+    password: ${DB_PASSWORD:password}
