@@ -1,7 +1,8 @@
 package com.example.dockercli;
 
-import com.example.dockercli.domain.Container;
-import com.example.dockercli.domain.Stat;
+import com.example.dockercli.domain.container.Container;
+import com.example.dockercli.domain.container.Stat;
+import com.example.dockercli.domain.image.Image;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -94,6 +95,30 @@ public class ShellService {
             }
         }
         return containerMap;
+    }
+
+
+    public Map<String, List<Image>> getImages(){
+        String command = "docker images --format \"{\\\"id\\\": \\\"{{ .ID }}\\\", \\\"repository\\\": \\\"{{ .Repository }}\\\", \\\"tag\\\": \\\"{{ .Tag }}\\\", \\\"size\\\": \\\"{{ .VirtualSize }}\\\" }\"";
+        Process exec = null;
+        String result;
+        Map<String, List<Image>> imageMap = new HashMap<>();
+        try {
+            String[] cmd = {"/bin/zsh", "-c", command};
+            exec = Runtime.getRuntime().exec(cmd);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exec.getInputStream()));
+            while ((result = bufferedReader.readLine()) != null) {
+                Image image = objectMapper.readValue(result, Image.class);
+            }
+            exec.waitFor();
+        } catch (Exception e) {
+            log.error("error - {}", e.getMessage());
+        } finally {
+            if (exec != null) {
+                exec.destroy();
+            }
+        }
+        return null;
     }
 
 
