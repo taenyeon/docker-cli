@@ -28,11 +28,11 @@ public class ContainerService {
     public Map<String, Container> getContainerMap() {
         Map<String, Container> containerInfo = getContainerInfo();
         Map<String, Stat> containerStatInfo = getContainerStatInfo();
-        containerInfo.forEach( (key, container) -> {
+        containerInfo.forEach((key, container) -> {
             String substring = key.substring(0, 12);
             Stat stat = containerStatInfo.get(substring);
             container.setStat(stat);
-        } );
+        });
         return containerInfo;
     }
 
@@ -50,9 +50,7 @@ public class ContainerService {
                 stringBuilder.append(new String(readLine));
             }
             exec.waitFor();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (exec != null) {
