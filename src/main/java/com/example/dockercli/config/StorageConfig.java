@@ -4,6 +4,7 @@ package com.example.dockercli.config;
 import com.example.dockercli.api.container.domain.Container;
 import com.example.dockercli.api.image.domain.Image;
 import com.example.dockercli.api.server.domain.Server;
+import lombok.Data;
 
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -11,20 +12,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Data
 public class StorageConfig {
 
+    private StorageConfig() {
+        throw new IllegalStateException("Static Access Class");
+    }
+
     // serverId <-> Server
-    public static Map<String, Server> serverIdToServer = new ConcurrentHashMap<>();
+    private static Map<String, Server> serverIdToServer = new ConcurrentHashMap<>();
     // containerId <-> Container
-    public static Map<String, Container> containerIdToContainer = new ConcurrentHashMap<>();
+    private static Map<String, Container> containerIdToContainer = new ConcurrentHashMap<>();
     // imageId <-> Image
-    public static Map<String, Image> imageIdToImage = new ConcurrentHashMap<>();
+    private static Map<String, Image> imageIdToImage = new ConcurrentHashMap<>();
 
     // serverId <-> List<containerId>
-    public static Map<String, List<String>> serverIdToContainerIds = new ConcurrentHashMap<>();
+    private static Map<String, List<String>> serverIdToContainerIds = new ConcurrentHashMap<>();
     // serverId <-> List<imageId>
-    public static Map<String, List<String>> serverIdToImageIds = new ConcurrentHashMap<>();
+    private static Map<String, List<String>> serverIdToImageIds = new ConcurrentHashMap<>();
     // containerId <-> imageId
-    public static Map<String, List<String>> containerIdToImageId = new ConcurrentHashMap<>();
+    private static Map<String, List<String>> containerIdToImageId = new ConcurrentHashMap<>();
 
 }
