@@ -1,8 +1,8 @@
 package com.example.dockercli;
 
 import com.example.dockercli.config.ApplicationConfig;
-import com.example.dockercli.domain.container.Container;
-import com.example.dockercli.domain.container.Stat;
+import com.example.dockercli.api.container.domain.Container;
+import com.example.dockercli.api.container.domain.Stat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,4 +1,4 @@
-package com.example.dockercli;
+package com.example.dockercli.api.container.service;
 
 import com.example.dockercli.api.container.domain.Container;
 import com.example.dockercli.api.container.domain.Stat;
@@ -20,11 +20,10 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ShellService {
+public class ContainerService {
 
     private final ObjectMapper objectMapperPascal;
     private final ObjectMapper objectMapper;
-
 
     public Map<String, Container> getContainerMap() {
         Map<String, Container> containerInfo = getContainerInfo();
@@ -95,5 +94,4 @@ public class ShellService {
         }
         return containerMap;
     }
-
 }

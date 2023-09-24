@@ -1,6 +1,6 @@
-package com.example.dockercli.domain.service;
+package com.example.dockercli.api.server.domain;
 
-public enum ServiceType {
+public enum ServerType {
     // 단일 컨테이너
     SINGLE,
     // 다중 컨테이너
