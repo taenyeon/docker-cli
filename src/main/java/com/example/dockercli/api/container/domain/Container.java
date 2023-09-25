@@ -1,4 +1,4 @@
-package com.example.dockercli.domain;
+package com.example.dockercli.api.container.domain;
 
 import lombok.Data;
 
@@ -10,12 +10,9 @@ public class Container {
     String name;
     LocalDateTime created;
     String platform;
-
     Stat stat;
     State state;
-
     Config config;
-
     NetworkSettings networkSettings;
 
 

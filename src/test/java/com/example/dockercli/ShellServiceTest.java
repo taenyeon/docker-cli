@@ -1,12 +1,10 @@
 package com.example.dockercli;
 
 import com.example.dockercli.config.ApplicationConfig;
-import com.example.dockercli.domain.Container;
-import com.example.dockercli.domain.Stat;
+import com.example.dockercli.api.container.domain.Container;
+import com.example.dockercli.api.container.domain.Stat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

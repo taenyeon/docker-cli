@@ -1,4 +1,4 @@
-package com.example.dockercli.domain;
+package com.example.dockercli.api.container.domain;
 
 import lombok.Data;
 
