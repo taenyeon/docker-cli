@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
@@ -22,8 +23,8 @@ public class ServerService {
 
     private final ObjectMapper objectMapper;
 
-    public Map<Integer, Server> getServerList() {
-        Map<Integer, Server> serverMap = null;
+    public Map<String, Server> getServers() {
+        Map<String, Server> serverMap = new ConcurrentHashMap<>();
         try {
             FileReader fileReader = new FileReader("/Users/gimtaeyeon/fileTest/serverList");
             BufferedReader reader = new BufferedReader(fileReader);
@@ -33,17 +34,38 @@ public class ServerService {
                 stringBuilder.append(line);
             }
             String result = stringBuilder.toString();
-            serverMap = objectMapper.readValue(result, new TypeReference<Map<Integer, Server>>() {
+            serverMap = objectMapper.readValue(result, new TypeReference<ConcurrentHashMap<String, Server>>() {
             });
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            log.error("Read File Error - error : ", e);
         }
         return serverMap;
     }
 
-//    public boolean addServer(){
-//
-//    }
+    public boolean writeServers(Map<String, Server> servers) {
+        boolean isSuccess = false;
+        try {
+            File file = new File("/Users/gimtaeyeon/fileTest/serverList");
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+            String serversString = objectMapper.writeValueAsString(servers);
+            bufferedWriter.write(serversString);
+            isSuccess = true;
+            bufferedWriter.close();
+
+        } catch (IOException e) {
+            log.error("Write File Error - error : ", e);
+        }
+        return isSuccess;
+    }
+
+    public boolean addServer(Server server) {
+        Map<String, Server> servers = getServers();
+        if (servers.containsKey(server.getName())) {
+            throw new IllegalStateException("is exist server");
+        }
+        servers.put(server.getName(), server);
+        return writeServers(servers);
+    }
 
 }

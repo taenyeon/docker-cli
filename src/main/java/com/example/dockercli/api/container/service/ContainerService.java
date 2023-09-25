@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ContainerService {
     private final ObjectMapper objectMapperPascal;
     private final ObjectMapper objectMapper;
 
-    public Map<String, Container> getContainerMap() {
+    public Map<String, Container> getContainers() {
         Map<String, Container> containerInfo = getContainerInfo();
         Map<String, Stat> containerStatInfo = getContainerStatInfo();
         containerInfo.forEach((key, container) -> {
