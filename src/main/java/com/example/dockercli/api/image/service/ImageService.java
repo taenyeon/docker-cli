@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
@@ -22,7 +23,7 @@ public class ImageService {
         String command = "docker images --format \"{\\\"id\\\": \\\"{{ .ID }}\\\", \\\"repository\\\": \\\"{{ .Repository }}\\\", \\\"tag\\\": \\\"{{ .Tag }}\\\", \\\"size\\\": \\\"{{ .VirtualSize }}\\\" }\"";
         Process exec = null;
         String result;
-        Map<String, Image> imageMap = new HashMap<>();
+        Map<String, Image> images = new ConcurrentHashMap<>();
         try {
             String[] cmd = {"/bin/zsh", "-c", command};
             exec = Runtime.getRuntime().exec(cmd);
@@ -30,7 +31,7 @@ public class ImageService {
             while ((result = bufferedReader.readLine()) != null) {
                 Image image = objectMapper.readValue(result, Image.class);
                 if (image != null) {
-                    imageMap.put(image.getId(), image);
+                    images.put(image.getId(), image);
                 }
             }
             exec.waitFor();
@@ -41,6 +42,6 @@ public class ImageService {
                 exec.destroy();
             }
         }
-        return null;
+        return images;
     }
 }
