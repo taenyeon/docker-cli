@@ -1,6 +1,6 @@
-package com.example.dockercli.api.image.service;
+package com.example.dockercli.config.storage.image.service;
 
-import com.example.dockercli.api.image.domain.Image;
+import com.example.dockercli.config.storage.image.domain.Image;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

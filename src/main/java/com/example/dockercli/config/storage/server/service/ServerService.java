@@ -1,7 +1,6 @@
-package com.example.dockercli.api.server.service;
+package com.example.dockercli.config.storage.server.service;
 
-import com.example.dockercli.api.container.domain.Container;
-import com.example.dockercli.api.server.domain.Server;
+import com.example.dockercli.config.storage.server.domain.Server;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

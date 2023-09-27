@@ -1,4 +1,4 @@
-package com.example.dockercli.api.server.domain;
+package com.example.dockercli.config.storage.server.domain;
 
 import lombok.*;
 

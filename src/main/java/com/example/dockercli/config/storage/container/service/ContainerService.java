@@ -1,7 +1,7 @@
-package com.example.dockercli.api.container.service;
+package com.example.dockercli.config.storage.container.service;
 
-import com.example.dockercli.api.container.domain.Container;
-import com.example.dockercli.api.container.domain.Stat;
+import com.example.dockercli.config.storage.container.domain.Container;
+import com.example.dockercli.config.storage.container.domain.Stat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

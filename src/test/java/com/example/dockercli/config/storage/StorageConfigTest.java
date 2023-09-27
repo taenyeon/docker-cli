@@ -1,9 +1,9 @@
 package com.example.dockercli.config.storage;
 
-import com.example.dockercli.api.container.domain.Container;
-import com.example.dockercli.api.image.domain.Image;
-import com.example.dockercli.api.server.domain.Server;
-import com.example.dockercli.api.server.service.ServerService;
+import com.example.dockercli.config.storage.container.domain.Container;
+import com.example.dockercli.config.storage.image.domain.Image;
+import com.example.dockercli.config.storage.server.domain.Server;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class StorageConfigTest {
@@ -23,6 +21,7 @@ class StorageConfigTest {
     private StorageConfig storageConfig;
 
     @Test
+    @DisplayName("Storage 정보 조회")
     void get() throws InterruptedException {
         for (int i = 0; i < 10; i++) {
             log.info("get#######################");
@@ -37,6 +36,7 @@ class StorageConfigTest {
     }
 
     @Test
+    @DisplayName("Storage 정보 업데이트")
     void update() throws InterruptedException {
         Thread.sleep(3000);
         storageConfig.update();

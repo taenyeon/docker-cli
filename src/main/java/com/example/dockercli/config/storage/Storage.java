@@ -1,9 +1,9 @@
 package com.example.dockercli.config.storage;
 
 
-import com.example.dockercli.api.container.domain.Container;
-import com.example.dockercli.api.image.domain.Image;
-import com.example.dockercli.api.server.domain.Server;
+import com.example.dockercli.config.storage.container.domain.Container;
+import com.example.dockercli.config.storage.image.domain.Image;
+import com.example.dockercli.config.storage.server.domain.Server;
 
 import java.util.List;
 import java.util.Map;

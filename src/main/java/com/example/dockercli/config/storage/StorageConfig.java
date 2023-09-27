@@ -1,11 +1,11 @@
 package com.example.dockercli.config.storage;
 
-import com.example.dockercli.api.container.domain.Container;
-import com.example.dockercli.api.container.service.ContainerService;
-import com.example.dockercli.api.image.domain.Image;
-import com.example.dockercli.api.image.service.ImageService;
-import com.example.dockercli.api.server.domain.Server;
-import com.example.dockercli.api.server.service.ServerService;
+import com.example.dockercli.config.storage.container.domain.Container;
+import com.example.dockercli.config.storage.container.service.ContainerService;
+import com.example.dockercli.config.storage.image.domain.Image;
+import com.example.dockercli.config.storage.image.service.ImageService;
+import com.example.dockercli.config.storage.server.domain.Server;
+import com.example.dockercli.config.storage.server.service.ServerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -61,4 +61,5 @@ public class StorageConfig {
         Storage.serverNameToContainerIds = serverNameToContainerIds;
         Storage.serverNameToImageIds = serverNameToImageIds;
     }
+
 }

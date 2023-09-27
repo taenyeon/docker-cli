@@ -1,8 +1,9 @@
 package com.example.dockercli.api.server.service;
 
-import com.example.dockercli.api.server.domain.Server;
-import com.example.dockercli.api.server.domain.ServerType;
+import com.example.dockercli.config.storage.server.domain.Server;
+import com.example.dockercli.config.storage.server.domain.ServerType;
 import com.example.dockercli.config.ApplicationConfig;
+import com.example.dockercli.config.storage.server.service.ServerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
