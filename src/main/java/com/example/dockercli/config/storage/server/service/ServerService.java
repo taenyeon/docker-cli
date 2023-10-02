@@ -2,13 +2,11 @@ package com.example.dockercli.config.storage.server.service;
 
 import com.example.dockercli.config.storage.server.domain.Server;
 import com.example.dockercli.util.FileUtil;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,7 +19,7 @@ public class ServerService {
 
     public Map<String, Server> getServers() {
 
-        Map<String, Server> serverMap = FileUtil.getByAllLine("/Users/gimtaeyeon/fileTest/servers.json", new ConcurrentHashMap<String, Server>());
+        Map<String, Server> serverMap = FileUtil.getMultiValue("/Users/gimtaeyeon/fileTest/servers.json", ConcurrentHashMap.class);
         if (serverMap == null) {
             serverMap = new ConcurrentHashMap<>();
         }
