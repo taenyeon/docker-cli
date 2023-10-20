@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -59,6 +60,9 @@ public class ContainerStorage {
             }
         }
         String result = stringBuilder.toString();
+        if (StringUtils.isEmpty(result)) {
+            return new ConcurrentHashMap<>();
+        }
         try {
             List<Container> containers = objectMapperPascal.readValue(result, new TypeReference<List<Container>>() {
             });

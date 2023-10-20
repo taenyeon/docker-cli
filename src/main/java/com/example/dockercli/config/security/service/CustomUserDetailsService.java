@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private String getUserFilePath(String username) {
-        String filePath = "/Users/gimtaeyeon/fileTest/user/{username}";
+        String filePath = "/Users/gimtaeyeon/fileTest/user/{username}.json";
         return filePath.replace("{username}", username);
     }
 

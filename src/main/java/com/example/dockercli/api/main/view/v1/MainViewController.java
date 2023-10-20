@@ -1,4 +1,4 @@
-package com.example.dockercli.api.server.controller.v1;
+package com.example.dockercli.api.main.view.v1;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 @Slf4j
 @RequiredArgsConstructor
-public class MainController {
-
+public class MainViewController {
 
     public String mainPage(){
         return "/";
