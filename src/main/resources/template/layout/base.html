@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="layout/header :: header">
+    <title>레이아웃 타이틀</title>
+</head>
+<body>
+<div id="wrapper">
+    <div th:replace="layout/sideBar :: sideBar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <div th:replace="layout/navigation :: navigation"></div>
+            <th:block layout:fragment="Content"></th:block>
+        </div>
+    </div>
+    <div th:replace="layout/footer :: footer"></div>
+    <!--<div th:replace="~{/copyright :: copyright}"></div>-->
+    <div th:replace="layout/config :: config"></div>
+    <div th:replace="layout/logoutModal :: logoutModal"></div>
+</div>
+</body>
+</html>
