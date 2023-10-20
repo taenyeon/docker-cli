@@ -1,37 +1,44 @@
 package com.example.dockercli.config.storage;
 
 import com.example.dockercli.config.storage.container.domain.Container;
-import com.example.dockercli.config.storage.container.service.ContainerService;
+import com.example.dockercli.config.storage.container.storage.ContainerStorage;
 import com.example.dockercli.config.storage.image.domain.Image;
-import com.example.dockercli.config.storage.image.service.ImageService;
+import com.example.dockercli.config.storage.image.storage.ImageStorage;
 import com.example.dockercli.config.storage.server.domain.Server;
-import com.example.dockercli.config.storage.server.service.ServerService;
+import com.example.dockercli.config.storage.server.storage.ServerStorage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class StorageConfig {
 
-    private final ServerService serverService;
-    private final ContainerService containerService;
-    private final ImageService imageService;
+    private final ServerStorage serverService;
+    private final ContainerStorage containerService;
+    private final ImageStorage imageService;
+
+    @PostConstruct
+    public void init(){
+        this.update();
+    }
 
     public void update() {
-        Map<String, Server> servers = serverService.getServers();
-        Map<String, Container> containers = containerService.getContainers();
-        Map<String, Image> images = imageService.getImages();
+        ConcurrentMap<String, Server> servers = serverService.getServers();
+        ConcurrentMap<String, Container> containers = containerService.getContainers();
+        ConcurrentMap<String, Image> images = imageService.getImages();
 
-        Map<String, List<String>> serverNameToContainerIds = new ConcurrentHashMap<>();
-        Map<String, List<String>> serverNameToImageIds = new ConcurrentHashMap<>();
+        ConcurrentMap<String, List<String>> serverNameToContainerIds = new ConcurrentHashMap<>();
+        ConcurrentMap<String, List<String>> serverNameToImageIds = new ConcurrentHashMap<>();
 
         servers.forEach((serverName, server) -> {
             List<String> containerIds = new ArrayList<>();

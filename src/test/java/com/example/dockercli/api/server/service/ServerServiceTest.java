@@ -3,7 +3,7 @@ package com.example.dockercli.api.server.service;
 import com.example.dockercli.config.storage.server.domain.Server;
 import com.example.dockercli.config.storage.server.domain.ServerType;
 import com.example.dockercli.config.ApplicationConfig;
-import com.example.dockercli.config.storage.server.service.ServerService;
+import com.example.dockercli.config.storage.server.storage.ServerStorage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,14 +14,14 @@ import java.util.Map;
 
 class ServerServiceTest {
 
-    Logger log = LoggerFactory.getLogger(ServerService.class);
-    ServerService serverService;
+    Logger log = LoggerFactory.getLogger(ServerStorage.class);
+    ServerStorage serverService;
     Server server;
 
     @BeforeEach
     void setUp() {
         ObjectMapper objectMapper = new ApplicationConfig().objectMapper();
-        serverService = new ServerService(objectMapper);
+        serverService = new ServerStorage(objectMapper);
         server = Server.builder()
                 .name("test")
                 .url("test///")

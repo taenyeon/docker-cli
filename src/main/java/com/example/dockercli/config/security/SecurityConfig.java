@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -45,8 +47,8 @@ public class SecurityConfig {
                 // login
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/")
-                .failureUrl("/")
+                .successHandler(getSuccessHandler())
+                .failureHandler(getAuthenticationFailureHandler())
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // logout
@@ -61,6 +63,20 @@ public class SecurityConfig {
                 .maxSessionsPreventsLogin(true)
                 .expiredUrl("/login");
         return http.build();
+    }
+
+    private static AuthenticationFailureHandler getAuthenticationFailureHandler() {
+        return (request, response, exception) -> {
+            System.out.println("exception : " + exception.getMessage());
+            response.sendRedirect("/"); // 인증이 성공한 후에는 root로 이동
+        };
+    }
+
+    private static AuthenticationSuccessHandler getSuccessHandler() {
+        return (request, response, authentication) -> {
+            System.out.println("authentication : " + authentication.getName());
+            response.sendRedirect("/"); // 인증이 성공한 후에는 root로 이동
+        };
     }
 
     @Bean

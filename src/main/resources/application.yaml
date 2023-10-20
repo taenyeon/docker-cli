@@ -1,17 +1,12 @@
 spring:
-  profiles:
-    active: local
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      connection-timeout: 5000
-      validation-timeout: 1000
-      maximum-pool-size: 20
-    jpa:
-      properties:
-        hibernate:
-          format_sql: true
-          use_sql_comments: true
-      hibernate:
-        naming:
-          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/template/
+    suffix: .html
+    cache: false
+  devtools:
+    livereload:
+      enabled: true
+file-path:
+  server: /Users/gimtaeyeon/fileTest/servers.json
+  user: /Users/gimtaeyeon/fileTest/user/{username}
