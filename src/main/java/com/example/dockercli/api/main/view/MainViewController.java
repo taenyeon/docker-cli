@@ -1,4 +1,4 @@
-package com.example.dockercli.api.main.view.v1;
+package com.example.dockercli.api.main.view;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

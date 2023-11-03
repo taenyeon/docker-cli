@@ -21,7 +21,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return  FileUtil.getSingleValue(getUserFilePath(username),
+        return  FileUtil.getSingleValue(
+                getUserFilePath(username),
                 User.class);
     }
 

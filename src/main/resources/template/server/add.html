@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/base}"
+      layout:fragment="Content"
+>
+<body>
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Add Server</h1>
+    <div class="card shadow mb-5 m-5">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Add Server</h6>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="name">ServerName</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="name" placeholder="ServerName" required>
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Your ServerName is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="url">ServerPath</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">https://example.com/</span>
+                    </div>
+                    <input type="text" class="form-control" id="url" placeholder="ServerPath" required>
+                    <div class="invalid-feedback" style="width: 100%;">
+                        Your ServerPath is required.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="serverType">ServerType</label>
+                <div class="input-group">
+                    <select class="custom-select" id="serverType">
+                        <option value="SINGLE">SINGLE</option>
+                        <option value="MULTI">MULTI</option>
+                    </select>
+                </div>
+            </div>
+            <!--            <div class="input-group">-->
+            <!--                <span class="input-group-text">With textarea</span>-->
+            <!--                <textarea class="form-control" aria-label="With textarea"></textarea>-->
+            <!--            </div>-->
+        </div>
+        <button class="btn btn-primary btn-icon-split" id="addBtn">
+            <span class="text">Add Server</span>
+        </button>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+</body>
+
+<!-- Page level plugins -->
+<script src="/js/service/server/add.js"></script>
+<!-- Page level custom scripts -->
+<!--<script src="js/demo/datatables-demo.js"></script>-->
+<!-- Service scripts -->
+</html>
