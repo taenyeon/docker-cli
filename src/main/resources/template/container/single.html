@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/base}"
+      layout:fragment="Content"
+>
+<body>
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 id="mainTitle" class="h3 mb-4 text-gray-800"></h1>
+    <div class="card shadow mb-5 m-5">
+        <div class="card-header py-3">
+            <h6 id="subTitle" class="m-0 font-weight-bold text-primary"></h6>
+        </div>
+        <div class="card-body">
+            <div class="mb-2 mt-0 text-right">
+                <button id="statusChangeBtn" class="btn btn-sm btn-icon-split btn-warning">
+                    <span id="statusChangeText" class="text">EXIT</span>
+                </button>
+                <button id="deleteServerBtn" class="btn btn-sm btn-icon-split btn-danger">
+                    <span class="text">Delete</span>
+                </button>
+            </div>
+
+            <h4 class="small font-weight-bold">Memory Usage
+                <span class="float-right text-primary">%</span>
+            </h4>
+            <div class="progress mb-4">
+                <div class="progress-bar bg-primary" role="progressbar" id="memoryPer" style="width: 0%"
+                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+            <h6 class="mb-2 font-weight-bold text-gray-800">⌘ Container Info</h6>
+            <ol class="mb-4 list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">Id</div>
+                        <span id="id"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">Name</div>
+                        <span id="name"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">Platform</div>
+                        <span id="platform"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">createdAt</div>
+                        <span id="createdAt"></span>
+                    </div>
+                </li>
+            </ol>
+            <h6 class="mb-2 font-weight-bold text-gray-800">⌘ Stat</h6>
+            <ol class="mb-4 list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">CpuPer</div>
+                        <span id="cpuPer"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">Memory</div>
+                        <span id="memory"></span>
+                    </div>
+                </li>
+            </ol>
+            <h6 class="mb-2 font-weight-bold text-gray-800">⌘ State</h6>
+            <ol class="mb-4 list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">Running</div>
+                        <span id="running"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">Pid</div>
+                        <span id="pid"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">StartedAt</div>
+                        <span id="startedAt"></span>
+                    </div>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">FinishedAt</div>
+                        <span id="finishedAt"></span>
+                    </div>
+                </li>
+                </li>
+            </ol>
+
+            <h6 class="mb-2 font-weight-bold text-gray-800">⌘ Config</h6>
+            <ol class="mb-4 list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">User</div>
+                        <span id="user"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">Image</div>
+                        <span id="image"></span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="ms-2 me-auto">
+                        <div class="mb-1 font-weight-bold text-primary">Env</div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="envTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                </tr>
+                                </thead>
+                                <tbody id="envTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+</body>
+
+<!-- Page level plugins -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var containerId = [[${containerId}]];
+    /*]]>*/
+</script>
+<script src="/js/service/container/single.js"></script>
+<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<!-- Page level custom scripts -->
+<!--<script src="js/demo/datatables-demo.js"></script>-->
+<!-- Service scripts -->
+</html>

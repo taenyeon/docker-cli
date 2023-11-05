@@ -14,6 +14,4 @@ public class Container {
     State state;
     Config config;
     NetworkSettings networkSettings;
-
-
 }

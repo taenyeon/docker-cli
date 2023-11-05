@@ -12,9 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -33,6 +33,7 @@ public class StorageConfig {
     }
 
     public void update() {
+        log.info("[StorageConfig.update] Storage Update Start - startAt : {}", LocalDateTime.now());
         ConcurrentMap<String, Server> servers = serverService.getServers();
         ConcurrentMap<String, Container> containers = containerService.getContainers();
         ConcurrentMap<String, Image> images = imageService.getImages();
@@ -46,6 +47,7 @@ public class StorageConfig {
 
             containers.forEach((containerId, container) -> {
                 String containerPrefix = container.getName().split("-")[0];
+                containerPrefix = containerPrefix.replace("/","");
                 if (StringUtils.equalsIgnoreCase(containerPrefix, serverName)) {
                     containerIds.add(containerId);
                 }
@@ -63,10 +65,21 @@ public class StorageConfig {
         });
 
         Storage.serverIdToServer = servers;
+        log.info("[StorageConfig.update] Storage Update - serverIdToServer : {}", Storage.serverIdToServer);
+
         Storage.containerIdToContainer = containers;
+        log.info("[StorageConfig.update] Storage Update - containerIdToContainer : {}", Storage.containerIdToContainer);
+
         Storage.imageIdToImage = images;
+        log.info("[StorageConfig.update] Storage Update - imageIdToImage : {}", Storage.imageIdToImage);
+
         Storage.serverNameToContainerIds = serverNameToContainerIds;
+        log.info("[StorageConfig.update] Storage Update - serverNameToContainerIds : {}", Storage.serverNameToContainerIds);
+
         Storage.serverNameToImageIds = serverNameToImageIds;
+        log.info("[StorageConfig.update] Storage Update - serverNameToImageIds : {}", Storage.serverNameToImageIds);
+
+        log.info("[StorageConfig.update] Storage Update End - endAt : {}", LocalDateTime.now());
     }
 
 }

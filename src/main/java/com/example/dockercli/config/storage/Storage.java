@@ -8,20 +8,20 @@ import com.example.dockercli.config.storage.server.domain.Server;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class Storage {
 
-
     // serverId <-> Server
-    public static Map<String, Server> serverIdToServer = new ConcurrentHashMap<>();
+    public static ConcurrentMap<String, Server> serverIdToServer = new ConcurrentHashMap<>();
     // containerId <-> Container
-    public static Map<String, Container> containerIdToContainer = new ConcurrentHashMap<>();
+    public static ConcurrentMap<String, Container> containerIdToContainer = new ConcurrentHashMap<>();
     // imageId <-> Image
-    public static Map<String, Image> imageIdToImage = new ConcurrentHashMap<>();
+    public static ConcurrentMap<String, Image> imageIdToImage = new ConcurrentHashMap<>();
 
     // serverId <-> List<containerId>
-    public static Map<String, List<String>> serverNameToContainerIds = new ConcurrentHashMap<>();
+    public static ConcurrentMap<String, List<String>> serverNameToContainerIds = new ConcurrentHashMap<>();
     // serverId <-> List<imageId>
-    public static Map<String, List<String>> serverNameToImageIds = new ConcurrentHashMap<>();
+    public static ConcurrentMap<String, List<String>> serverNameToImageIds = new ConcurrentHashMap<>();
 
 }

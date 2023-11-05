@@ -20,8 +20,7 @@ class ServerServiceTest {
 
     @BeforeEach
     void setUp() {
-        ObjectMapper objectMapper = new ApplicationConfig().objectMapper();
-        serverService = new ServerStorage(objectMapper);
+        serverService = new ServerStorage();
         server = Server.builder()
                 .name("test")
                 .url("test///")

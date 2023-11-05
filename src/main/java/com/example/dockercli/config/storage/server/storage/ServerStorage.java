@@ -1,5 +1,6 @@
 package com.example.dockercli.config.storage.server.storage;
 
+import com.example.dockercli.config.storage.Storage;
 import com.example.dockercli.config.storage.server.domain.Server;
 import com.example.dockercli.util.FileUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,12 +12,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import static com.example.dockercli.config.storage.Storage.serverIdToServer;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class ServerStorage {
-
-    private final ObjectMapper objectMapper;
 
     public ConcurrentMap<String, Server> getServers() {
 
@@ -32,11 +33,31 @@ public class ServerStorage {
     }
 
     public boolean addServer(Server server) {
-        Map<String, Server> servers = getServers();
+        ConcurrentMap<String, Server> servers = Storage.serverIdToServer;
         if (servers.containsKey(server.getName())) {
             throw new IllegalStateException("is exist server");
         }
         servers.put(server.getName(), server);
+        return writeServers(servers);
+    }
+    
+    public boolean modifyServer(Server server){
+        ConcurrentMap<String, Server> servers = Storage.serverIdToServer;
+        if (!servers.containsKey(server.getName())) {
+            throw new IllegalStateException("is not exist server");
+        }
+        String managerId = servers.get(server.getName()).getManagerId();
+        server.setManagerId(managerId);
+        servers.replace(server.getName(), server);
+        return writeServers(servers);
+    }
+
+    public boolean deleteServer(String serverName){
+        ConcurrentMap<String, Server> servers = Storage.serverIdToServer;
+        if (!servers.containsKey(serverName)) {
+            throw new IllegalStateException("is not exist server");
+        }
+        servers.remove(serverName);
         return writeServers(servers);
     }
 
