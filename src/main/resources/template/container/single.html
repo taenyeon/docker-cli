@@ -16,12 +16,21 @@
         </div>
         <div class="card-body">
             <div class="mb-2 mt-0 text-right">
-                <button id="statusChangeBtn" class="btn btn-sm btn-icon-split btn-warning">
-                    <span id="statusChangeText" class="text">EXIT</span>
+                <button id="statusChangeBtn" class="btn btn-sm btn-icon-split">
+                    <span id="statusChangeText" class="text">Stop</span>
                 </button>
-                <button id="deleteServerBtn" class="btn btn-sm btn-icon-split btn-danger">
+                <button id="deleteContainerBtn" class="btn btn-sm btn-icon-split btn-danger">
                     <span class="text">Delete</span>
                 </button>
+            </div>
+
+            <h4 class="small font-weight-bold">Cpu Usage
+                <span class="float-right text-primary">%</span>
+            </h4>
+            <div class="progress mb-4">
+                <div class="progress-bar bg-primary" role="progressbar" id="cpuPerStat" style="width: 0%"
+                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                </div>
             </div>
 
             <h4 class="small font-weight-bold">Memory Usage
@@ -44,6 +53,12 @@
                     <div class="ms-2 me-auto">
                         <div class="font-weight-bold text-primary">Name</div>
                         <span id="name"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">Running</div>
+                        <span id="running"></span>
                     </div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -76,12 +91,6 @@
             </ol>
             <h6 class="mb-2 font-weight-bold text-gray-800">⌘ State</h6>
             <ol class="mb-4 list-group list-group-numbered">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                        <div class="font-weight-bold text-primary">Running</div>
-                        <span id="running"></span>
-                    </div>
-                </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
                         <div class="font-weight-bold text-primary">Pid</div>
@@ -128,6 +137,39 @@
                                 </tr>
                                 </thead>
                                 <tbody id="envTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </li>
+            </ol>
+
+            <h6 class="mb-2 font-weight-bold text-gray-800">⌘ NetworkSettings</h6>
+            <ol class="mb-4 list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">Gateway</div>
+                        <span id="gateway"></span>
+                    </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="font-weight-bold text-primary">IpAddress</div>
+                        <span id="ipAddress"></span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="ms-2 me-auto">
+                        <div class="mb-1 font-weight-bold text-primary">Ports</div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="ports" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Ports</th>
+                                </tr>
+                                </thead>
+                                <tbody id="portsBody">
                                 </tbody>
                             </table>
                         </div>

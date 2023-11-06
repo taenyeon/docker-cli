@@ -1,5 +1,6 @@
 package com.example.dockercli.config.storage.container.storage;
 
+import com.example.dockercli.api.server.domain.ServerDto;
 import com.example.dockercli.config.storage.container.domain.Container;
 import com.example.dockercli.config.storage.container.domain.Stat;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -49,7 +51,7 @@ public class ContainerStorage {
             exec = Runtime.getRuntime().exec(cmd);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exec.getInputStream()));
             while ((readLine = bufferedReader.readLine()) != null) {
-                stringBuilder.append(new String(readLine));
+                stringBuilder.append(readLine);
             }
             exec.waitFor();
         } catch (Exception e) {
@@ -66,12 +68,46 @@ public class ContainerStorage {
         try {
             List<Container> containers = objectMapperPascal.readValue(result, new TypeReference<List<Container>>() {
             });
-            containerMap = containers.stream().collect(Collectors.toConcurrentMap(Container::getId, container -> container));
+            containers.forEach(container -> {
+                String containerPrefix = container.getName().split("-")[0];
+                containerPrefix = containerPrefix.replace("/", "");
+                container.setName(containerPrefix);
+            });
+            containerMap = containers.stream()
+                    .collect(Collectors.toConcurrentMap(Container::getId, container -> container));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         return containerMap;
     }
+
+    public boolean stopContainer(String containerId) {
+        String command = "docker stop " + containerId;
+        return sendCommand(containerId, command);
+    }
+
+    public boolean startContainer(String containerId) {
+        String command = "docker start " + containerId;
+        return sendCommand(containerId, command);
+    }
+
+    public boolean dropContainer(String containerId) {
+        boolean isStopped = stopContainer(containerId);
+        if (isStopped) {
+            String command = "docker rm " + containerId;
+            return sendCommand(containerId, command);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean createContainer(ServerDto serverDto, String imageId){
+        String serverName = serverDto.getServer().getName();
+        String command = "docker run --name " + serverName + " " + imageId + " /bin/bash";
+        log.info("command : {}", command);
+        return sendCommand(null, command);
+    }
+
 
     public ConcurrentMap<String, Stat> getContainerStatInfo() {
         String command = "docker stats --no-stream --no-trunc --format \\\n" +
@@ -96,5 +132,32 @@ public class ContainerStorage {
             }
         }
         return containerMap;
+    }
+
+    private static boolean sendCommand(String containerId, String command) {
+        Process exec = null;
+        String readLine;
+        StringBuilder result = new StringBuilder();
+        boolean isSuccess = false;
+        try {
+            String[] cmd = {"/bin/zsh", "-c", command};
+            exec = Runtime.getRuntime().exec(cmd);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exec.getInputStream()));
+            while ((readLine = bufferedReader.readLine()) != null) {
+                result.append(readLine);
+            }
+            exec.waitFor();
+        } catch (Exception e) {
+            log.error("error - {}", e.getMessage());
+        } finally {
+            if (exec != null) {
+                exec.destroy();
+            }
+        }
+        log.info("result : {}", result);
+        if (containerId != null && result.toString().equals(containerId)) {
+            isSuccess = true;
+        }
+        return isSuccess;
     }
 }

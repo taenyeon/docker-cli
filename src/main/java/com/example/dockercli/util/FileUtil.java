@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -86,5 +87,25 @@ public class FileUtil {
             log.error("Read File Error - error : {}", e.getMessage());
         }
         return result;
+    }
+
+
+    public static String getStringValue(String filePath) {
+        String val = null;
+        try {
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader reader = new BufferedReader(fileReader);
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            val = stringBuilder.toString();
+            log.info("text : {}", val);
+
+        } catch (IOException e) {
+            log.error("Read File Error - error : {}", e.getMessage());
+        }
+        return val;
     }
 }

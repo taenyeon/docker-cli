@@ -2,6 +2,8 @@ package com.example.dockercli.config.storage;
 
 import com.example.dockercli.config.storage.container.domain.Container;
 import com.example.dockercli.config.storage.container.storage.ContainerStorage;
+import com.example.dockercli.config.storage.dockerfile.domain.DockerFile;
+import com.example.dockercli.config.storage.dockerfile.storage.DockerFileStorage;
 import com.example.dockercli.config.storage.image.domain.Image;
 import com.example.dockercli.config.storage.image.storage.ImageStorage;
 import com.example.dockercli.config.storage.server.domain.Server;
@@ -26,6 +28,7 @@ public class StorageConfig {
     private final ServerStorage serverService;
     private final ContainerStorage containerService;
     private final ImageStorage imageService;
+    private final DockerFileStorage dockerFileService;
 
     @PostConstruct
     public void init(){
@@ -38,6 +41,7 @@ public class StorageConfig {
         ConcurrentMap<String, Container> containers = containerService.getContainers();
         ConcurrentMap<String, Image> images = imageService.getImages();
 
+        ConcurrentMap<String, DockerFile> serverNameToDockerFile = dockerFileService.getDockerFiles();
         ConcurrentMap<String, List<String>> serverNameToContainerIds = new ConcurrentHashMap<>();
         ConcurrentMap<String, List<String>> serverNameToImageIds = new ConcurrentHashMap<>();
 
@@ -46,9 +50,7 @@ public class StorageConfig {
             List<String> imageIds = new ArrayList<>();
 
             containers.forEach((containerId, container) -> {
-                String containerPrefix = container.getName().split("-")[0];
-                containerPrefix = containerPrefix.replace("/","");
-                if (StringUtils.equalsIgnoreCase(containerPrefix, serverName)) {
+                if (StringUtils.equalsIgnoreCase(container.getName(), serverName)) {
                     containerIds.add(containerId);
                 }
             });
@@ -62,6 +64,7 @@ public class StorageConfig {
                 }
             });
             serverNameToImageIds.put(serverName,imageIds);
+
         });
 
         Storage.serverIdToServer = servers;
@@ -78,6 +81,9 @@ public class StorageConfig {
 
         Storage.serverNameToImageIds = serverNameToImageIds;
         log.info("[StorageConfig.update] Storage Update - serverNameToImageIds : {}", Storage.serverNameToImageIds);
+
+        Storage.serverNameToDockerFile = serverNameToDockerFile;
+        log.info("[StorageConfig.update] Storage Update - serverNameToDockerFile : {}", Storage.serverNameToDockerFile);
 
         log.info("[StorageConfig.update] Storage Update End - endAt : {}", LocalDateTime.now());
     }

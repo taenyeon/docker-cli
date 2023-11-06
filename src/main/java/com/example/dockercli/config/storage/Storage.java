@@ -2,6 +2,7 @@ package com.example.dockercli.config.storage;
 
 
 import com.example.dockercli.config.storage.container.domain.Container;
+import com.example.dockercli.config.storage.dockerfile.domain.DockerFile;
 import com.example.dockercli.config.storage.image.domain.Image;
 import com.example.dockercli.config.storage.server.domain.Server;
 
@@ -24,4 +25,5 @@ public class Storage {
     // serverId <-> List<imageId>
     public static ConcurrentMap<String, List<String>> serverNameToImageIds = new ConcurrentHashMap<>();
 
+    public static ConcurrentMap<String, DockerFile> serverNameToDockerFile = new ConcurrentHashMap<>();
 }

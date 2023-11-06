@@ -5,6 +5,7 @@ import com.example.dockercli.config.storage.Storage;
 import com.example.dockercli.config.storage.StorageConfig;
 import com.example.dockercli.config.storage.container.domain.Container;
 import com.example.dockercli.config.storage.container.storage.ContainerStorage;
+import com.example.dockercli.config.storage.dockerfile.domain.DockerFile;
 import com.example.dockercli.config.storage.image.domain.Image;
 import com.example.dockercli.config.storage.image.storage.ImageStorage;
 import com.example.dockercli.config.storage.server.domain.Server;
@@ -46,10 +47,13 @@ public class ServerService {
         Storage.serverNameToImageIds.get(serverName)
                 .forEach(imageId -> images.add(Storage.imageIdToImage.get(imageId)));
 
+        DockerFile dockerFile = Storage.serverNameToDockerFile.get(serverName);
+
         return ServerDto.builder()
                 .server(server)
                 .containers(containers)
                 .images(images)
+                .dockerFile(dockerFile)
                 .build();
     }
 

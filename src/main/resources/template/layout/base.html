@@ -21,6 +21,26 @@
     <div th:replace="layout/footer :: footer"></div>
     <!--<div th:replace="~{/copyright :: copyright}"></div>-->
     <div th:replace="layout/logoutModal :: logoutModal"></div>
+
+    <div id = "Progress_Loading"><!-- 로딩바 -->
+        <img src="/img/ajax_loading.gif" alt=""/>
+    </div>
+    <script src="/js/loading/loading.js"></script>
+
+    <style> <!-- 로딩바스타일 -->
+    body
+    {
+        text-align: center;
+        margin: 0 auto;
+    }
+    #Progress_Loading
+    {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        background: #ffffff;
+    }
+    </style>
 </div>
 </body>
 </html>
